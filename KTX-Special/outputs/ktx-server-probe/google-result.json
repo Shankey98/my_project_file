@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-11-25T10:56:15.483Z",
+  "runtime": "Google Apps Script",
+  "target": {
+    "date": "20261205",
+    "time": "083500",
+    "from": "서울",
+    "to": "포항",
+    "train": "259",
+    "adults": 1
+  },
+  "seatLookupVerified": false,
+  "automaticReservation": false,
+  "web": {
+    "httpStatus": 200,
+    "elapsedMs": 1866,
+    "bytes": 8412,
+    "result": "HTTP_ONLY_NO_SEAT_VERIFICATION"
+  },
+  "legacyQuery": {
+    "httpStatus": 200,
+    "elapsedMs": 1513,
+    "bytes": 233,
+    "protocol": {
+      "rootKeys": [
+        "strResult",
+        "h_msg_cd",
+        "h_msg_txt"
+      ],
+      "codes": [
+        {
+          "field": "strResult",
+          "value": "FAIL"
+        },
+        {
+          "field": "h_msg_cd",
+          "value": "MACRO ERROR"
+        }
+      ],
+      "messageKinds": [
+        "ACCESS_RESTRICTION"
+      ]
+    },
+    "upstreamCode": "MACRO ERROR",
+    "genericFailureMessage": "원활한 서비스 이용을 위해 앱을 최신 버전으로 업데이트한 뒤 재실행 후 안정적인 환경에서 사용해 주시기 바랍니다",
+    "result": "UPSTREAM_REJECTED_OR_UNKNOWN"
+  }
+}

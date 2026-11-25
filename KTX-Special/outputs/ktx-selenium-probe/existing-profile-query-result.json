@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-11-25T11:40:03.192Z",
+  "method": "Selenium WebDriver attached to existing user-approved Chrome Profile 1",
+  "request": {
+    "date": "2026-12-05",
+    "departure": "서울",
+    "arrival": "포항",
+    "after": "08:00",
+    "targetDeparture": "08:35",
+    "adults": 1
+  },
+  "url": "https://www.korail.com/ticket/search/list",
+  "status": "ACCESS_RESTRICTED",
+  "code": "-8003",
+  "message": "매크로, 개발자도구 등 미허가 도구 사용 시 이용이 제한될 수 있습니다.",
+  "seatAvailability": null,
+  "reservationCreated": false,
+  "watcherStarted": false
+}

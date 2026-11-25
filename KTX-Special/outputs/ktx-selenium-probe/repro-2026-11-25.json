@@ -1,0 +1,23 @@
+{
+  "title": "Selenium 연결 시 코레일 -8003 차단 재현 기록",
+  "date": "2026-11-25",
+  "summary": "Selenium(ChromeDriver)이 기존 Chrome Profile 1에 연결된 상태에서 2026-12-05 서울→포항 조회를 실행한 결과, 결과 목록 페이지(/ticket/search/list)로 이동은 되지만 좌석 목록이 나오지 않고 코레일이 -8003(매크로·개발자도구 등 미허가 도구) 제한을 발동함. 사용자가 같은 Chrome 프로필에서 수동 조회했을 때는 정상 목록이 표시됨. 자동화 연결 여부가 차이의 원인으로 보임.",
+  "steps": [
+    "1. 기존 Chrome Profile 1에 Selenium 연결 성공 (ExistingProfileHelper.mjs, DevToolsActivePort 기반). 폼 관찰: startDate=2026-12-05(토) 08:00, 인원 총 1명.",
+    "2. button.btn_lookup('열차 조회') 클릭 -> https://www.korail.com/ticket/search/list 로 이동. 결과 목록에는 '해당 스케줄에 운행하는 열차가 없습니다.' (열차 미표시).",
+    "3. 'KTX/KTX-산천' 필터 클릭 -> 안내 메시지 팝업 표시: '매크로, 개발자도구 등 미허가 도구 사용 시 이용이 제한될 수 있습니다... CODE : -8003'.",
+    "4. '확인'(button.btn_pop-close) 클릭 -> 팝업 닫힘. 목록은 여전히 열차 없음."
+  ],
+  "observed_at": "2026-11-25T12:31~12:35Z",
+  "error": {
+    "code": "-8003",
+    "message_ko": "매크로, 개발자도구 등 미허가 도구 사용 시 이용이 제한될 수 있습니다. 원활한 서비스를 위해 안정적인 환경에서 이용해 주시기 바랍니다. 정상적인 환경임에도 이용이 제한되는 경우 완전히 종료한 후 다시 실행해 주시기 바랍니다.",
+    "id_example": "c55afd35-c23b-13db-f5f0-b0208739d3e9"
+  },
+  "conclusion": "Selenium/ChromeDriver(CDP) 자동화 연결 상태의 브라우저에서 코레일 좌석 조회하면 차단됨(-8003/빈 목록). 자동 감시·실제 좌석 확보에는 자동화 탐지를 우회하거나, 자동 조회가 아닌 다른 수단이 필요. Selenium 대안(예: SeleniumBase UC 모드), 혹은 비자동화 채널 필요 - 아직 검증 안 됨.",
+  "proof_files": {
+    "screen_after": "outputs/ktx-selenium-probe/.runtime/screen.png",
+    "helper": "outputs/ktx-selenium-probe/ExistingProfileHelper.mjs",
+    "result_runtime": "outputs/ktx-selenium-probe/.runtime/result.json"
+  }
+}

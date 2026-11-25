@@ -1,0 +1,6 @@
+const status=document.querySelector('#status');
+async function update(){const data=await chrome.storage.local.get(['token','automatic','lastError','lastCheck','lastDrivenDates']);document.querySelector('#automatic').checked=Boolean(data.automatic);let msg=data.lastError || (data.token?`PC 연결 등록됨${data.lastCheck?' · 최근 확인 '+new Date(data.lastCheck).toLocaleTimeString('ko-KR'):''}`:'PC 앱에서 연결 코드를 먼저 만들어 주세요.');if(data.token && data.lastDrivenDates && data.lastDrivenDates.length) msg+=` · 자동조회 ${data.lastDrivenDates.join(', ')}`;status.textContent=msg;}
+document.querySelector('#pair').addEventListener('submit',async event=>{event.preventDefault();try{const result=await chrome.runtime.sendMessage({kind:'PAIR',code:document.querySelector('#code').value});if(!result.ok)throw new Error(result.error);document.querySelector('#code').value='';await update();}catch(error){status.textContent=error.message;}});
+document.querySelector('#automatic').addEventListener('change',async event=>{await chrome.storage.local.set({automatic:event.target.checked});await chrome.runtime.sendMessage({kind:'SCAN'});await update();});
+document.querySelector('#scan').addEventListener('click',async()=>{status.textContent='현재 결과를 읽고 있어요.';await chrome.runtime.sendMessage({kind:'SCAN'});await update();});
+update();

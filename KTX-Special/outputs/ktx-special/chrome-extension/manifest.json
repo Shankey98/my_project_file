@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "특실로 · 내 Chrome 연결",
+  "version": "0.3.0",
+  "description": "내 Chrome의 코레일 조회 결과를 내 PC의 특실로에 전달합니다. 로그인 정보는 읽지 않습니다. 자동 예약은 하지 않습니다.",
+  "permissions": ["storage", "scripting", "alarms", "notifications"],
+  "host_permissions": ["https://www.korail.com/*", "http://127.0.0.1:47831/*"],
+  "background": {"service_worker": "background.js"},
+  "action": {"default_title": "특실로 연결", "default_popup": "popup.html"},
+  "icons": {"128": "icon.png"}
+}

@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-11-25T11:01:18.749Z",
+  "runtime": "Node on PC; not Google server",
+  "httpStatus": 200,
+  "elapsedMs": 140,
+  "bytes": 555,
+  "strResult": "FAIL",
+  "code": "macro_err1",
+  "message": "비정상적인 요청으로 감지되어 차단되었습니다.<br>CODE : -4001<br>ID : 49f116fc-7234-4a26-7fe1-d48eab4d40a0",
+  "rootKeys": [
+    "strResult",
+    "h_msg_cd",
+    "h_msg_txt",
+    "errCode",
+    "errMsg",
+    "errEngMsg",
+    "globalFlag",
+    "dynaPathResultCode",
+    "requestId"
+  ],
+  "seatLookupVerified": false
+}

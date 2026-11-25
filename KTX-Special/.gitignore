@@ -1,0 +1,34 @@
+# dependencies
+**/node_modules/
+**/venv/
+**/.venv/
+work/selenium-probe/uc-venv/
+
+# local state / keys / runtime (개인 여행 데이터·푸시 키·스크린샷)
+**/.local/
+**/.runtime/
+
+# private browser profiles / sessions (쿠키 포함) / driver cache
+work/selenium-probe/test-profile/
+work/selenium-probe/uc-profile/
+work/selenium-probe/uc-profile2/
+work/selenium-probe/driver-cache/
+
+# caches / temp / history
+work/pnpm-store/
+work/pnpm-cache/
+work/package-*/
+work/session-history/
+work/launcher-data/
+work/preview-data/
+references/
+
+# logs / pids / env / secrets
+**/*.log
+**/*.pid
+.env
+.env.*
+
+# old deployments / archives
+outputs/*.zip
+work/*.zip

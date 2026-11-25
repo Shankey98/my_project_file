@@ -1,0 +1,69 @@
+Google 서버 1회 조회 진단 + Slack 전송 테스트
+수정: 2026-11-25 / Google 서버 실제 실행 완료, 좌석 조회 실패
+
+실제 확인 결과
+- Google 프로젝트에 Code.gs를 저장하고 직접 실행했습니다.
+- https://script.google.com/home/projects/1Xkgl4vHkEE-2UvG_Ltmu2p0QgQfEqG4JCJVa1a8JqROcJyKcIWupoHu1/edit
+- 웹 진입 페이지 HTTP 200. 열차별 좌석 정보 확인은 되지 않았습니다.
+- 과거 앱 규격: strResult=FAIL / h_msg_cd=MACRO ERROR.
+- 공백 포함 코드가 진단 로그에서 빠지는 버그를 고쳤습니다. 앞선 버전 관련 분류는 불완전했습니다.
+- 현재 공식 웹 번들에서 확인한 웹 구분값 BH, Version 999999999, POST 요청으로 바꿨습니다.
+- 수정 후 Google 실제 실행: strResult=FAIL / h_msg_cd=macro_err1 / ACCESS_RESTRICTED.
+- 같은 웹 방식의 PC HTTP 요청도 비정상 요청(-4001) 응답입니다.
+- TLS, 세션, 기기, IP 중 어떤 검사가 거부 원인인지는 개별 확인되지 않았습니다.
+- 최신 Google 결과: google-web-result.json / google-web-result.png.
+- 과거 앱 방식 결과: google-result.json / google-result.png.
+- 24시간 트리거/자동 예약은 등록하지 않았습니다. Google → Slack 웹훅은 미설정입니다.
+- Codex Slack 연결로 #gpt-알림(C0CKTV4BWAX)에 연결 테스트 메시지를 보낸 상태입니다.
+
+이 코드는 상시 감시 앱이 아닙니다. 24시간 감시/자동 예약은 시작하지 않습니다.
+코레일 로그인, 쿠키 복사, 결제, 원래 표 취소를 하지 않습니다.
+
+1. https://script.google.com/home 에서 Apps Script 만들기를 누릅니다.
+2. Code.gs의 내용을 새 프로젝트의 기본 코드 전체와 바꿉니다. 저장합니다.
+3. 함수 목록에서 probeKorailServer를 선택하고 실행합니다.
+4. Google의 외부 서비스 연결 권한 요청은 본인이 내용을 확인하고 승인합니다.
+   이 코드는 UrlFetchApp 외부 HTTP 연결만 사용합니다. Gmail/Drive 내용 접근은 필요 없습니다.
+   명시적으로 범위를 제한하려면 프로젝트 설정에서 매니페스트 표시 후 함께 제공한
+   appsscript.json을 사용합니다. 게시/배포나 결제 계정 연결은 필요 없습니다.
+5. 실행 로그의 JSON 결과를 확인합니다. 이 JSON만 채팅에 알려주면 됩니다.
+   비밀번호/쿠키/웹훅 URL은 보내지 마세요.
+
+대상: 2026-12-05 서울 → 포항, 08:35, 259번, 성인 1명.
+해당 날짜의 열차번호/시각 일치도 조회에서 확인해야 합니다. 출발 후에는 실행을 막습니다.
+날짜/시간/구간/열차/인원은 Code.gs의 target에서 바꿉니다.
+
+결과 해석
+- web.httpStatus=200: 웹 페이지 HTTP 접속만 성공. 좌석 조회 성공이라는 뜻이 아닙니다.
+- webQuery.result=TARGET_OBSERVED: 날짜/역/열차번호/시각과 특실 코드까지 일치했습니다.
+  specialClass는 조회 시점의 표시입니다. 예약 확보나 인원 전원 좌석 확보를 뜻하지 않습니다.
+- 그 외: 오류 코드/응답 형식/대상 불일치 등으로 조회를 검증하지 못했습니다.
+  모든 서버 방식의 불가능을 입증하지 않습니다.
+  전체 원문 응답, 헤더, 요청 URL, 계정 정보는 로그에 남기지 않습니다.
+  제한된 형식의 오류 코드와 일반적인 한국어 업데이트 안내 문구만 기록합니다.
+
+조회 근거와 한계
+- 첫 요청은 현재 공식 웹 진입 페이지의 접속 진단입니다.
+- 두 번째 요청은 현재 공식 웹 번들에서 확인한 호스트/메서드/웹 구분값을 사용합니다.
+  브라우저 검증 토큰을 생성하거나 사용자 세션을 복사하지 않습니다. 실제 조회 결과는 접근 제한입니다.
+- 반복/재시도/트리거는 없으며 실행당 최대 두 번 HTTP 조회합니다.
+- 현재 웹 코드 출처: https://cdn.korail.com/bundle/bundle.2f516729ddb2f5d67ab3.js?v=1.0.221
+- 공식 구버전 종료/단말 검증 안내: https://smart.letskorail.com/ebizmk/notice/detail.do?bbrdId=000000000032&ptwtSqno=1904
+- Google 문서: https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app
+
+Slack
+확인된 채널: #gpt-알림 / C0CKTV4BWAX
+Codex의 Slack 연결과 외부 서버의 전송 권한은 다릅니다.
+서버용 Slack 앱의 Incoming Webhooks를 활성화하고 이 채널을 대상으로 웹훅을 만듭니다.
+비공개 채널이면 그 Slack 앱도 채널에 추가되어 있어야 합니다.
+웹훅은 해당 채널에 메시지를 쓸 수 있는 비밀 URL입니다.
+프로젝트 설정 → 스크립트 속성에서 SLACK_WEBHOOK_URL 값으로 직접 저장합니다.
+코드/채팅/앱 화면/공개 저장소에 URL을 붙이지 마세요.
+함수 목록에서 testSlack를 실행합니다. 이 함수는 실제 메시지 1개를 전송합니다.
+공식 안내: https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/
+휴대폰 Slack에서 해당 워크스페이스/채널 알림과 OS 알림을 허용해야 푸시를 받을 수 있습니다.
+
+검증 상태
+합성 응답 9개 점검: 오류/HTML/다른 열차의 성공 오판 방지, 공백 포함 오류 코드, POST 보존 등을 확인했습니다.
+Google 실제 조회는 실행했지만 열차별 좌석 데이터를 받지 못했습니다.
+서버 Slack 전송은 아직 실행하지 않았습니다.

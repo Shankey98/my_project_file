@@ -1,0 +1,35 @@
+{
+  "title": "Chrome 확장프로그램 방식 -8003 없음 검증 성공",
+  "date": "2026-11-25",
+  "summary": "Selenium/CDP처럼 외부 드라이버를 붙이지 않고 브라우저 페이지 안에서만 동작하는 특실로 Chrome 확장프로그램(chrome-extension)이 korail.com 조회 결과 탭의 실제 좌석 데이터를 읽어 로컬 앱(127.0.0.1:47831) /bridge/snapshot으로 전달 성공. -8003/차단 없음.",
+  "how": "사용자가 Chrome에 확장프로그램 로드(chrome://extensions 개발자 모드 -> 압축해제 폴더 선택), PC 앱에서 만든 연결 코드로 페어링, korail 12-05 서울→포항 결과 탭에서 스캔. 확장이 페이지 DOM(parse.js/content.js)을 읽어 스냅샷 전송.",
+  "bridge_state": {
+    "paired": true,
+    "pairedAt": "2026-11-25T12:47:54.380Z",
+    "lastSeen": "2026-11-25T12:48:14.686Z",
+    "live": true,
+    "snapshot_received_at": "2026-11-25T12:48:14.686Z",
+    "date": "2026-12-05",
+    "from": "서울",
+    "to": "포항"
+  },
+  "trains_snapshot": [
+    {"number": "257", "time": "08:08", "special": "soldout", "general": "soldout"},
+    {"number": "259", "time": "08:35", "special": "soldout", "general": "soldout"},
+    {"number": "291", "time": "09:23", "special": "soldout", "general": "soldout"},
+    {"number": "263", "time": "10:43", "special": "soldout", "general": "soldout"},
+    {"number": "265", "time": "12:39", "special": "soldout", "general": "unknown"},
+    {"number": "267", "time": "12:58", "special": "soldout", "general": "unknown"},
+    {"number": "269", "time": "14:33", "special": "soldout", "general": "unknown"},
+    {"number": "293", "time": "15:50", "special": "available", "general": "available"},
+    {"number": "273", "time": "15:56", "special": "available", "general": "available"},
+    {"number": "275", "time": "16:18", "special": "soldout", "general": "available"}
+  ],
+  "app_trip_status": {
+    "trip": "2026-12-05 서울→포항 특실 감시(테스트)",
+    "train": "KTX 259 08:35",
+    "status": "watching",
+    "label": "최근 확인 · 특실 매진"
+  },
+  "conclusion": "자동 감시·좌석 확보에는 Selenium(외부 드라이버)이 아니라 이 확장프로그램 방식이 viable. 실제 특실 'available' 감지 시 앱 경고(특실 표시 발견) 동작 검증 필요, 자동 새로고침(automatic) 사용 여부 확인 필요."
+}

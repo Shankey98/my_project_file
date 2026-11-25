@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#142c43">
+  <meta name="description" content="여행마다 다른 조건으로 준비하는 나만의 KTX 특실 도우미">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>특실로 · 나의 여행</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <div id="gate" class="gate" hidden>
+    <div class="gate-card">
+      <img src="/icon.svg" width="60" height="60" alt="">
+      <p class="eyebrow">나만의 KTX 특실 도우미</p><h1>내 PC와 연결하기</h1>
+      <p>PC의 특실로에서 만든 연결 코드를 입력해 주세요.</p>
+      <form id="pair-form"><label for="pair-code">연결 코드</label><input id="pair-code" name="code" autocomplete="off" required maxlength="40"><button class="button primary" type="submit">기기 연결</button><p id="pair-error" class="error" role="alert"></p></form>
+      <p class="small">외부 접속에는 보안 연결과 HTTPS 주소가 필요해요.</p>
+    </div>
+  </div>
+  <div id="shell" class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#trips"><img src="/icon.svg" width="39" height="39" alt=""><span>특실로<span class="brand-sub">내 여행의 여유를 찾다</span></span></a>
+      <div class="nav-label">나의 공간</div>
+      <nav aria-label="주 메뉴">
+        <a href="#trips" data-nav="trips"><span class="nav-icon" data-icon="ticket"></span>내 여행<span id="nav-count" class="nav-count">0</span></a>
+        <a href="#notifications" data-nav="notifications"><span class="nav-icon" data-icon="bell"></span>알림</a>
+        <a href="#connection" data-nav="connection"><span class="nav-icon" data-icon="link"></span>기기 연결</a>
+      </nav>
+      <div class="sidebar-note"><span data-icon="shield"></span><strong>나만을 위한 여행 도우미</strong><p>여행 정보는 내 PC에 저장돼요.<br>결제는 코레일에서 직접 진행해요.</p></div>
+      <div class="sidebar-footer"><span class="version">개발판 0.2</span><span>PC 실행형</span></div>
+    </aside>
+    <main>
+      <header class="topbar"><span class="topbar-label">PERSONAL TRAVEL COMPANION</span><div class="topbar-right"><span id="connection-pill" class="connection-pill">PC 연결 중</span><span class="avatar" aria-label="개인용 계정">나</span></div></header>
+      <div class="content">
+        <div id="offline-banner" class="offline-banner" role="status" hidden>PC와 연결이 끊겼어요. 마지막으로 확인한 정보를 표시하고 있어요. PC 실행 상태를 확인해 주세요.</div>
+        <div class="page-heading"><div><p id="page-eyebrow" class="eyebrow">YOUR NEXT JOURNEY</p><h1 id="page-title">내 여행</h1><p id="page-description">여행마다 다른 조건으로, 원하는 특실을 준비해요.</p></div><button class="button primary" data-action="new"><span data-icon="plus"></span>여행 추가</button></div>
+        <div class="integration-notice"><span class="notice-icon" data-icon="info"></span><div><strong>현재는 여행 설정을 준비하는 단계예요</strong><p>실제 특실 조회·자동 예약은 아직 연결되지 않았어요. 감시 요청을 저장해도 예약은 실행되지 않아요.</p></div><a href="#connection">연결 상태 보기</a></div>
+        <section id="view" aria-label="선택한 화면"></section>
+        <footer class="page-footer"><span>특실로 · 개인용 개발판</span><span>PC가 켜져 있고 절전 상태가 아닐 때 작동해요.</span></footer>
+      </div>
+    </main>
+  </div>
+  <dialog id="trip-dialog" aria-labelledby="dialog-title">
+    <form id="trip-form">
+      <div class="dialog-header"><div><p class="eyebrow">JOURNEY SETTINGS</p><h2 id="dialog-title">새 여행 추가</h2></div><button type="button" class="icon-button" data-action="close-dialog" aria-label="닫기">×</button></div>
+      <div class="dialog-body">
+        <div class="form-main">
+          <div class="form-section"><h3>어디로 떠나나요?</h3><label for="trip-name">여행 이름</label><input id="trip-name" name="name" required maxlength="60" placeholder="예: 금요일 부산 출장">
+            <div class="form-row"><div><label for="trip-from">출발역</label><input id="trip-from" name="from" list="stations" required maxlength="30" placeholder="서울"></div><button type="button" class="swap-button" data-action="swap" aria-label="출발역과 도착역 바꾸기">교환</button><div><label for="trip-to">도착역</label><input id="trip-to" name="to" list="stations" required maxlength="30" placeholder="부산"></div></div>
+            <label for="trip-date">가는 날</label><input id="trip-date" name="date" type="date" required>
+            <datalist id="stations"><option value="서울"><option value="용산"><option value="청량리"><option value="광명"><option value="수원"><option value="천안아산"><option value="오송"><option value="대전"><option value="김천구미"><option value="동대구"><option value="경주"><option value="울산"><option value="부산"><option value="익산"><option value="광주송정"><option value="목포"><option value="전주"><option value="순천"><option value="여수엑스포"><option value="강릉"><option value="진주"><option value="포항"></datalist>
+          </div>
+          <div class="form-section"><div class="section-head"><h3>함께 가는 사람</h3><span id="passenger-total" class="count-label">총 1명</span></div><p class="field-help">여행마다 인원을 다르게 설정할 수 있어요. 좌석이 필요한 인원만 입력해 주세요. 현재 설정 범위는 총 1~9명이에요.</p>
+            <div class="passenger-line"><div><strong>어른</strong><span>일반 성인</span></div><div class="stepper"><button type="button" data-step="adult:-1" aria-label="어른 줄이기">−</button><input name="adult" aria-label="어른 인원" type="number" min="0" max="9" value="1" required><button type="button" data-step="adult:1" aria-label="어른 늘리기">+</button></div></div>
+            <div class="passenger-line"><div><strong>어린이</strong><span>만 6~12세</span></div><div class="stepper"><button type="button" data-step="child:-1" aria-label="어린이 줄이기">−</button><input name="child" aria-label="어린이 인원" type="number" min="0" max="9" value="0" required><button type="button" data-step="child:1" aria-label="어린이 늘리기">+</button></div></div>
+            <div class="passenger-line"><div><strong>경로</strong><span>만 65세 이상</span></div><div class="stepper"><button type="button" data-step="senior:-1" aria-label="경로 줄이기">−</button><input name="senior" aria-label="경로 인원" type="number" min="0" max="9" value="0" required><button type="button" data-step="senior:1" aria-label="경로 늘리기">+</button></div></div>
+          </div>
+          <div class="form-section"><div class="section-head"><h3>원하는 후보 열차</h3><span class="count-label">위쪽 열차 우선</span></div><p class="field-help">코레일에서 확인한 열차번호와 출발 시각을 입력해 주세요. 이 화면에서는 시간표를 조회하지 않아요.</p><div id="train-fields"></div><button type="button" class="button outline full" data-action="add-train"><span data-icon="plus"></span>후보 열차 추가</button></div>
+        </div>
+        <aside class="form-side"><h3>특실 확보 조건</h3>
+          <label for="seat-policy">인원 조건</label><select id="seat-policy" name="seatPolicy"><option value="all">전원 좌석이 있을 때만</option><option value="partial">일부 인원만 있으면 알림 후 직접 확인</option></select>
+          <label for="adjacency">좌석 배치</label><select id="adjacency" name="adjacency"><option value="prefer">가능하면 가까운 좌석</option><option value="any">떨어진 좌석도 괜찮아요</option></select>
+          <p class="field-help">좌석 배치 적용 가능 여부는 코레일 연동 후 확인해요.</p>
+          <label for="existing-ticket">기존 일반실 표</label><select id="existing-ticket" name="existingTicket"><option value="paid">결제 완료</option><option value="unpaid">예약만 완료 · 미결제</option><option value="none">기존 표 없음</option></select>
+          <label for="trip-deadline">감시 요청 종료 시각 <span class="optional">선택</span></label><input id="trip-deadline" name="deadline" type="datetime-local"><p class="field-help">비워 두면 마지막 후보 열차 출발 시각까지로 저장해요. 모든 시각은 한국 기준이에요.</p>
+          <label for="trip-notes">메모 <span class="optional">선택</span></label><textarea id="trip-notes" name="notes" rows="3" maxlength="500" placeholder="이 여행에서 기억할 내용"></textarea>
+          <label class="checkbox-line"><input name="watchRequested" type="checkbox" checked><span>감시 요청도 함께 저장</span></label>
+          <div class="form-note"><span data-icon="shield"></span><p>기존 표는 자동 취소하지 않아요.<br>특실 확보 후 결제는 직접 진행해요.</p></div>
+        </aside>
+      </div>
+      <div class="dialog-footer"><p id="form-error" class="error" role="alert"></p><div><button type="button" class="button ghost" data-action="close-dialog">취소</button><button type="submit" class="button primary" id="save-trip">여행 저장</button></div></div>
+    </form>
+  </dialog>
+  <dialog id="confirm-dialog" class="confirm-dialog"><h2>이 여행을 삭제할까요?</h2><p>코레일 예약에는 영향을 주지 않아요. 앱에 저장한 여행 설정만 삭제돼요.</p><div class="confirm-actions"><button class="button ghost" data-action="cancel-delete">취소</button><button class="button danger" data-action="confirm-delete">삭제</button></div></dialog>
+  <input id="import-file" type="file" accept="application/json,.json" hidden>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

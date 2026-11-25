@@ -1,0 +1,10 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const html=await readFile(new URL('./korail-public.html',import.meta.url),'utf8');
+const script=[...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map(m=>m[1]).find(x=>x.startsWith('https://cdn.korail.com/bundle/'));
+if(!script)throw Error('No public application bundle');
+const response=await fetch(script,{signal:AbortSignal.timeout(30000)});
+if(!response.ok)throw Error('HTTP '+response.status);
+const source=await response.text();
+await writeFile(new URL('./korail-public-bundle.txt',import.meta.url),source);
+const routes=[...new Set([...source.matchAll(/["']([^"'\s]{1,180})["']/g)].map(m=>m[1]).filter(x=>(x.includes('.do')||/^https?:/.test(x)||x.includes('/api/'))&&!x.includes('www.w3.org')))];
+console.log(JSON.stringify({bytes:Buffer.byteLength(source),routes:routes.slice(0,200)},null,2));

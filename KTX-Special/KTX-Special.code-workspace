@@ -1,0 +1,11 @@
+{
+  "folders": [{ "name": "KTX Special · 특실로", "path": "." }],
+  "settings": {
+    "files.exclude": { "**/node_modules": true, "work/pnpm-store": true, "work/pnpm-cache": true, "work/selenium-probe/test-profile": true },
+    "search.exclude": { "**/node_modules": true, "work/pnpm-store": true, "work/pnpm-cache": true, "work/session-history": true, "**/.local": true, "**/.runtime": true, "work/selenium-probe/test-profile": true }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [{ "type": "node", "request": "launch", "name": "특실로 PC 앱", "program": "${workspaceFolder}/outputs/ktx-special/server.mjs", "cwd": "${workspaceFolder}/outputs/ktx-special", "skipFiles": ["<node_internals>/**"] }]
+  }
+}

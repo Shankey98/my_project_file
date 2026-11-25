@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-11-25T11:02:48.175Z",
+  "runtime": "Google Apps Script",
+  "target": {
+    "date": "20261205",
+    "time": "083500",
+    "from": "서울",
+    "to": "포항",
+    "train": "259",
+    "adults": 1
+  },
+  "seatLookupVerified": false,
+  "automaticReservation": false,
+  "web": {
+    "httpStatus": 200,
+    "elapsedMs": 1311,
+    "bytes": 8412,
+    "result": "HTTP_ONLY_NO_SEAT_VERIFICATION"
+  },
+  "webQuery": {
+    "httpStatus": 200,
+    "elapsedMs": 1305,
+    "bytes": 555,
+    "protocol": {
+      "rootKeys": [
+        "strResult",
+        "h_msg_cd",
+        "h_msg_txt",
+        "errCode",
+        "errMsg",
+        "errEngMsg",
+        "globalFlag",
+        "dynaPathResultCode",
+        "requestId"
+      ],
+      "codes": [
+        {
+          "field": "strResult",
+          "value": "FAIL"
+        },
+        {
+          "field": "h_msg_cd",
+          "value": "macro_err1"
+        }
+      ],
+      "messageKinds": [
+        "ACCESS_RESTRICTION"
+      ]
+    },
+    "upstreamCode": "macro_err1",
+    "result": "ACCESS_RESTRICTED"
+  }
+}
